@@ -28,8 +28,13 @@ router.post("/", async (req, res) => {
       student,
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  console.log("API ERROR:", error);
+  res.status(500).json({
+    error: error.message || "Server error",
+    code: error.code,
+    detail: error.detail,
+  });
+}
 });
 
 // GET all students with pagination
@@ -61,8 +66,13 @@ router.get("/", async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  console.log("API ERROR:", error);
+  res.status(500).json({
+    error: error.message || "Server error",
+    code: error.code,
+    detail: error.detail,
+  });
+}
 });
 
 // GET single student with marks
@@ -91,8 +101,13 @@ router.get("/:id", async (req, res) => {
       marks: marksResult.rows,
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  console.log("API ERROR:", error);
+  res.status(500).json({
+    error: error.message || "Server error",
+    code: error.code,
+    detail: error.detail,
+  });
+}
 });
 
 // UPDATE student
@@ -117,8 +132,13 @@ router.put("/:id", async (req, res) => {
       student: result.rows[0],
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  console.log("API ERROR:", error);
+  res.status(500).json({
+    error: error.message || "Server error",
+    code: error.code,
+    detail: error.detail,
+  });
+}
 });
 
 // DELETE student
@@ -141,8 +161,13 @@ router.delete("/:id", async (req, res) => {
       message: "Student deleted successfully",
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  console.log("API ERROR:", error);
+  res.status(500).json({
+    error: error.message || "Server error",
+    code: error.code,
+    detail: error.detail,
+  });
+}
 });
 
 module.exports = router;
