@@ -3,7 +3,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const API_URL = "http://localhost:5000/api/students";
+// const API_URL = "http://localhost:5000/api/students";
+const API_URL = "https://nadsoft-task.onrender.com/api/students";
 
 function App() {
   const [students, setStudents] = useState([]);
