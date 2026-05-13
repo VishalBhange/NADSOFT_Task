@@ -46,9 +46,22 @@ router.get("/", async (req, res) => {
     const offset = (page - 1) * limit;
 
     const students = await pool.query(
-      "SELECT * FROM students ORDER BY id DESC LIMIT $1 OFFSET $2",
-      [limit, offset]
-    );
+  `
+  SELECT 
+    students.id,
+    students.name,
+    students.email,
+    students.age,
+    COALESCE(marks.subject, '-') AS subject,
+    COALESCE(marks.marks::text, '-') AS marks
+  FROM students
+  LEFT JOIN marks
+  ON students.id = marks.student_id
+  ORDER BY students.id DESC
+  LIMIT $1 OFFSET $2
+  `,
+  [limit, offset]
+);
 
     const totalResult = await pool.query(
       "SELECT COUNT(*) FROM students"

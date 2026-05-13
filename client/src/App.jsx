@@ -3,7 +3,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// const API_URL = "http://localhost:5000/api/students";
 const API_URL = "https://nadsoft-task.onrender.com/api/students";
 
 function App() {
@@ -119,23 +118,17 @@ function App() {
 
   return (
     <div className="container-fluid p-4 bg-light min-vh-100">
-       <h1 className="mb-3 text-center">STUDENTS DATA</h1>
+      <h1 className="mb-3 text-center fw-bold">STUDENTS DATA</h1>
+
       <div className="bg-white border rounded shadow-sm p-3">
-        <h5 className="mb-3">All Members</h5>
+        <h5 className="mb-3 fw-bold">All Members</h5>
 
         <div className="row mb-3">
-          {/* <div className="col-md-4">
-            <input
-              type="text"
-              className="form-control form-control-sm"
-              placeholder="Qk"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div> */}
-
           <div className="col-md-12 text-end">
-            <button className="btn btn-success btn-sm px-5" onClick={openAddModal}>
+            <button
+              className="btn btn-success btn-sm px-5"
+              onClick={openAddModal}
+            >
               Add New Member
             </button>
           </div>
@@ -148,61 +141,67 @@ function App() {
               <th>Member Name</th>
               <th>Member Email</th>
               <th>Age</th>
+              <th>Subject</th>
+              <th>Marks</th>
               <th className="text-center">Action</th>
             </tr>
           </thead>
 
           <tbody>
-            {filteredStudents.map((student) => (
-              <tr key={student.id}>
-                <td>{student.id}</td>
-                <td>{student.name}</td>
-                <td>{student.email}</td>
-                <td>{student.age}</td>
-                <td className="text-center">
-                  <button
-                    className="btn btn-warning btn-sm me-2"
-                    onClick={() => handleEdit(student)}
-                  >
-                    ✎
-                  </button>
+            {filteredStudents.length > 0 ? (
+              filteredStudents.map((student) => (
+                <tr key={`${student.id}-${student.subject}-${student.marks}`}>
+                  <td>{student.id}</td>
+                  <td>{student.name}</td>
+                  <td>{student.email}</td>
+                  <td>{student.age}</td>
+                  <td>{student.subject || "-"}</td>
+                  <td>{student.marks || "-"}</td>
+                  <td className="text-center">
+                    <button
+                      className="btn btn-warning btn-sm me-2"
+                      onClick={() => handleEdit(student)}
+                    >
+                      ✎
+                    </button>
 
-                  <button
-                    className="btn btn-danger btn-sm"
-                    onClick={() => handleDelete(student.id)}
-                  >
-                    🗑
-                  </button>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDelete(student.id)}
+                    >
+                      🗑
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="text-center">
+                  No students found
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
 
-        <div className="d-flex justify-content-between align-items-center">
-          {/* <select className="form-select form-select-sm" style={{ width: "80px" }}>
-            <option>5</option>
-          </select> */}
+        <div className="d-flex justify-content-end align-items-center">
+          <button
+            className="btn btn-light btn-sm border me-1"
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+          >
+            Previous
+          </button>
 
-          <div>
-            <button
-              className="btn btn-light btn-sm border me-1"
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
-            >
-              Previous
-            </button>
+          <button className="btn btn-success btn-sm me-1">{page}</button>
 
-            <button className="btn btn-success btn-sm me-1">{page}</button>
-
-            <button
-              className="btn btn-light btn-sm border"
-              disabled={page === totalPages}
-              onClick={() => setPage(page + 1)}
-            >
-              Next
-            </button>
-          </div>
+          <button
+            className="btn btn-light btn-sm border"
+            disabled={page === totalPages}
+            onClick={() => setPage(page + 1)}
+          >
+            Next
+          </button>
         </div>
       </div>
 
@@ -227,7 +226,9 @@ function App() {
 
               <form onSubmit={handleSubmit}>
                 <div className="modal-body">
-                  <label className="form-label fw-bold small">Member Name*</label>
+                  <label className="form-label fw-bold small">
+                    Member Name*
+                  </label>
                   <input
                     type="text"
                     name="name"
@@ -238,7 +239,9 @@ function App() {
                     required
                   />
 
-                  <label className="form-label fw-bold small">Member Email*</label>
+                  <label className="form-label fw-bold small">
+                    Member Email*
+                  </label>
                   <input
                     type="email"
                     name="email"
@@ -249,7 +252,9 @@ function App() {
                     required
                   />
 
-                  <label className="form-label fw-bold small">Member Age*</label>
+                  <label className="form-label fw-bold small">
+                    Member Age*
+                  </label>
                   <input
                     type="number"
                     name="age"
